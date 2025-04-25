@@ -11,6 +11,10 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json({ limit: "10mb" }));
 
+app.use(cors({
+  origin: 'https://hitech-002.github.io'
+}));
+
 const client = new Client({
   connectionString: "postgresql://shoes_x_owner:npg_wGSQCAXHs51c@ep-delicate-truth-a59lql4p-pooler.us-east-2.aws.neon.tech/shoes_x?sslmode=require",
   ssl: { rejectUnauthorized: false },
