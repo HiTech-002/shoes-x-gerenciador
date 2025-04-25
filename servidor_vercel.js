@@ -66,7 +66,7 @@ app.post("/change", async (req, res) => {
 });
 
 app.post("/vendas", async (req, res) => {
-  const { escolha, marca, modelo, nivel, preco, raridade, tamanho, unidade, caminho } = req.body;
+  const { escolha, marca, modelo, nivel, preco, raridade, tamanho, unidade, caminho, senha } = req.body;
 
   try {
     if (escolha === "usuario") {
@@ -85,8 +85,8 @@ app.post("/vendas", async (req, res) => {
 
       if (val.rows.length > 0) {
         await client.query(
-          "INSERT INTO sapatos (marca, modelo, nivel, raridade, quantidade, preco, tamanho, usuarios, localizacao, loja, caminho, tipo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)",
-          [marca, modelo, nivel, raridade, unidade, preco, tamanho, loja, local, loja, caminho, "loja"]
+          "INSERT INTO sapatos (marca, modelo, nivel, raridade, quantidade, preco, tamanho, usuarios, localizacao, loja, caminho, tipo, senha) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)",
+          [marca, modelo, nivel, raridade, unidade, preco, tamanho, loja, local, loja, caminho, "loja", senha]
         );
         res.json({ status: "ok" });
       } else {
