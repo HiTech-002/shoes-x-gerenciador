@@ -78,7 +78,7 @@ app.post("/vendas", async (req, res) => {
       );
       res.json({ status: "ok" });
     } else {
-      const { loja, local, senha } = req.body;
+      const { loja, local, senha,usu,sen } = req.body;
       const val = await client.query(
         "SELECT id FROM cadastro_loja WHERE nome = $1 AND senha = $2",
         [loja, senha]
@@ -87,7 +87,7 @@ app.post("/vendas", async (req, res) => {
       if (val.rows.length > 0) {
         await client.query(
           "INSERT INTO sapatos (marca, modelo, nivel, raridade, quantidade, preco, tamanho, usuarios, localizacao, loja, caminho, tipo,senha) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
-          [marca, modelo, nivel, raridade, unidade, preco, tamanho, usuario, local, loja, caminho, "loja",senha]
+          [marca, modelo, nivel, raridade, unidade, preco, tamanho, usu, local, loja, caminho, "loja",sen]
         );
         res.json({ status: "ok" });
       } else {
@@ -134,3 +134,5 @@ app.get("/transforma",async (req,res)=>{
 })
 
 export default app
+
+
