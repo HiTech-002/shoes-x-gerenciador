@@ -67,7 +67,7 @@ app.post("/change", async (req, res) => {
 });
 
 app.post("/vendas", async (req, res) => {
-  const { escolha, marca, modelo, nivel, preco, raridade, tamanho, unidade, caminho, senha } = req.body;
+  const { escolha, marca, modelo, nivel, preco, raridade, tamanho, unidade, caminho, senha, usuario } = req.body;
 
   try {
     if (escolha === "usuario") {
@@ -86,8 +86,8 @@ app.post("/vendas", async (req, res) => {
 
       if (val.rows.length > 0) {
         await client.query(
-          "INSERT INTO sapatos (marca, modelo, nivel, raridade, quantidade, preco, tamanho, usuarios, localizacao, loja, caminho, tipo,senha) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12,$13)",
-          [marca, modelo, nivel, raridade, unidade, preco, tamanho, loja, local, loja, caminho, "loja",senha]
+          "INSERT INTO sapatos (marca, modelo, nivel, raridade, quantidade, preco, tamanho, usuarios, localizacao, loja, caminho, tipo,senha) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
+          [marca, modelo, nivel, raridade, unidade, preco, tamanho, usuario, local, loja, caminho, "loja",senha]
         );
         res.json({ status: "ok" });
       } else {
@@ -114,6 +114,23 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.post("/mensagem",async (req,res)=>{
+  let body=req.body
+  let {usuario}=body
+
+  let comando=`select * from vendido where usuario='${usuario}'`
+
+  const result= await client.query(comando)
+  res.json(result.rows)
+  console.log(usuario)
+  console.log(result.rows)
+
+})
+
+
+app.get("/transforma",async (req,res)=>{
+  let comando_2=`update vendido set visualizacao=true where visualizacao=false`
+  await client.query(comando_2)
+})
+
 export default app
-
-
